@@ -9,6 +9,7 @@ using Repo.Core.Interfaces;
 using Repo.Core.Models;
 using Repo.EF;
 using Repo.EF.Helpers;
+using RepositoryPatternWithUOW.Core;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -77,6 +78,7 @@ builder.Services.AddAuthentication(options =>
                     };
                 });
 builder.Services.AddTransient(typeof(IAuthService), typeof(AuthService));
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
