@@ -54,7 +54,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option=>option.UseSqlServer(
     b=>b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
     ));
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
-builder.Services.AddTransient(typeof(IAuthService), typeof(AuthService));
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -75,9 +75,8 @@ builder.Services.AddAuthentication(options =>
                         ValidAudience = builder.Configuration["JWT:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
                     };
-                }
-                );
-
+                });
+builder.Services.AddTransient(typeof(IAuthService), typeof(AuthService));
 
 var app = builder.Build();
 
